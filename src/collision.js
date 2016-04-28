@@ -18,11 +18,19 @@ function getGridBuckets(squareDim, factor) {
 }
 
 function setToMatchingGridBucket(bucketDimension, factor, gridBuckets, type, element) {
-  var j = Math.max(0, Math.floor(element.x / bucketDimension.w));
-  var i = Math.max(0, Math.floor(element.y / bucketDimension.h));
+  var potentialBuckets = {};
 
-  var bucket = gridBuckets[j + i * factor];
-  bucket[type].push(element);
+  for (var j = 0; j < 2; j++) {
+    for (var i = 0; i < 2; i++) {
+      var jx = Math.max(0, Math.floor((element.x + element.w * j) / bucketDimension.w));
+      var ix = Math.max(0, Math.floor((element.y + element.h * i) / bucketDimension.h));
+      var bucket = gridBuckets[jx + ix * factor];
+      if (bucket && !potentialBuckets[jx + ',' + ix]) {
+        potentialBuckets[jx + ',' + ix] = true;
+        bucket[type].push(element);
+      }
+    }
+  }
 }
 
 function handleCollisionInBucket(collisionHandleCB, gridBucket) {

@@ -11,11 +11,11 @@ function createRandomGroup(numberOfObjs, maxW, maxH) {
 
 describe('foo', function() {
   it('should', function() {
-    var gridWidth = 10000;
-    var gridHeight = 10000;
+    var gridWidth = 100000;
+    var gridHeight = 300000;
 
-    var groupA = createRandomGroup(5000, gridWidth, gridHeight);
-    var groupB = createRandomGroup(4000, gridWidth, gridHeight);
+    var groupA = createRandomGroup(50000, gridWidth, gridHeight);
+    var groupB = createRandomGroup(10000, gridWidth, gridHeight);
 
     var groupAObjDims = {w: 4, h: 10};
     var groupBObjDims = {w: 25, h: 25};
@@ -37,16 +37,16 @@ describe('foo', function() {
     });
 
 
-    var factor = 5;
+    var DIV_FACTOR = 10;
     var collisions = [];
     var cb = function(objA, objB) {
       collisions.push({a: objA, b: objB});
-      // console.log('collision: ' + JSON.stringify(objA) + ' | ' + JSON.stringify(objB));
     };
 
     var start = Date.now();
-    handleCollision(groupA, groupB, gridWidth, gridHeight, factor, cb);
+    handleCollision(groupA, groupB, gridWidth, gridHeight, DIV_FACTOR, cb);
     var end = Date.now();
     console.log('total time:' + (end-start) + 'ms');
+    console.log('amount of collisions is:' + collisions.length);
   });
 });
